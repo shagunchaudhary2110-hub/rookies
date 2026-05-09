@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>ExamNest | Smart Study Workspace</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+
+    body {
+      background:
+        radial-gradient(circle at top left, #f7efe2, transparent 30%),
+        radial-gradient(circle at bottom right, #dfe9f5, transparent 30%),
+        #f6f1e8;
+
+      font-family: "Inter", sans-serif;
+      overflow-x: hidden;
+    }
+
+    .paper-card {
+      background: #fffdf8;
+      border-radius: 28px 42px 24px 40px;
+      box-shadow:
+        0 10px 25px rgba(0,0,0,0.08);
+
+      transition: 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .paper-card:hover {
+      transform: translateY(-8px) rotate(-1deg);
+      box-shadow:
+        0 18px 40px rgba(0,0,0,0.12);
+    }
+
+    .paper-card::before {
+      content: "";
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      background: rgba(191, 213, 233, 0.18);
+      border-radius: 50%;
+      top: -50px;
+      right: -40px;
+    }
+
+    .sticky-note {
+      background: #fff0b8;
+      transform: rotate(-3deg);
+      border-radius: 14px;
+      box-shadow:
+        0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .desk-box {
+      background: rgba(255,255,255,0.55);
+      backdrop-filter: blur(14px);
+      border-radius: 40px;
+      box-shadow:
+        0 12px 30px rgba(0,0,0,0.07);
+    }
+
+    .quote-shape {
+      border-radius:
+        40% 60% 60% 40% /
+        40% 40% 60% 60%;
+    }
+
+    .blob {
+      border-radius:
+        55% 45% 30% 70% /
+        40% 60% 40% 60%;
+    }
+
+    .soft-btn {
+      background: linear-gradient(
+        to right,
+        #7b9acc,
+        #9db5d6
+      );
+
+      color: white;
+      border-radius: 20px;
+      transition: 0.3s ease;
+    }
+
+    .soft-btn:hover {
+      transform: scale(1.04);
+      box-shadow:
+        0 8px 18px rgba(0,0,0,0.12);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+  </style>
+</head>
+
+<body class="text-gray-800 min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="px-5 py-6">
+
+    <div class="desk-box max-w-7xl mx-auto px-8 py-6 flex flex-col lg:flex-row gap-6 items-center justify-between">
+
+      <div>
+
+        <h1 class="text-5xl font-black tracking-tight text-[#4f6689]">
+          📚 ExamNest
+        </h1>
+
+        <p class="text-gray-600 mt-2 text-lg">
+          Your calm digital study workspace.
+        </p>
+
+      </div>
+
+      <!-- SEARCH -->
+      <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search important subjects..."
+          class="bg-white/80 px-5 py-4 rounded-full outline-none shadow-lg w-full sm:w-96"
+        >
+
+        <select
+          id="semesterFilter"
+          class="bg-white/80 px-5 py-4 rounded-full outline-none shadow-lg"
+        >
+          <option value="all">
+            All Semesters
+          </option>
+        </select>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <!-- HERO -->
+  <section class="px-5 mt-4">
+
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
+
+      <!-- LEFT -->
+      <div>
+
+        <div class="sticky-note p-6 max-w-sm mb-6">
+
+          <p class="font-semibold text-lg">
+            ✨ Study Tip
+          </p>
+
+          <p class="mt-2 text-gray-700">
+            Focus on previous year papers first.
+            Most important questions repeat frequently.
+          </p>
+
+        </div>
+
+        <h2 class="text-6xl font-black leading-tight text-[#3f4e65]">
+
+          Organized
+          Study Desk
+          For Smart Students
+
+        </h2>
+
+        <p class="text-gray-600 text-xl mt-6 leading-relaxed max-w-2xl">
+
+          Access only the most important subjects and papers —
+          beautifully organized semester-wise with a clean,
+          distraction-free study experience.
+
+        </p>
+
+        <div class="flex gap-4 mt-8 flex-wrap">
+
+          <a
+            href="#papers"
+            class="soft-btn px-8 py-4 text-lg font-bold"
+          >
+            Browse Important Papers
+          </a>
+
+          <a
+            href="#help"
+            class="bg-white px-8 py-4 rounded-full shadow-lg hover:scale-105 transition"
+          >
+            Help Center
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="relative">
+
+        <div class="blob bg-[#dfe7f3] p-10 shadow-2xl">
+
+          <div class="bg-white rounded-[30px] p-8 shadow-xl">
+
+            <h3 class="text-2xl font-black text-[#5c7091]">
+              📌 Important Subjects
+            </h3>
+
+            <div class="grid grid-cols-2 gap-4 mt-6">
+
+              <div class="sticky-note p-4">
+                Data Structures
+              </div>
+
+              <div class="sticky-note p-4">
+                DBMS
+              </div>
+
+              <div class="sticky-note p-4">
+                Operating Systems
+              </div>
+
+              <div class="sticky-note p-4">
+                Computer Networks
+              </div>
+
+              <div class="sticky-note p-4">
+                AI & ML
+              </div>
+
+              <div class="sticky-note p-4">
+                Software Engineering
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- MOTIVATION -->
+  <section class="px-5 mt-16">
+
+    <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
+
+      <div class="quote-shape bg-[#fff6dc] p-10 shadow-xl">
+
+        <h3 class="font-black text-2xl">
+          🌱 Small Progress
+        </h3>
+
+        <p class="mt-5 text-gray-700 leading-relaxed">
+          “Success doesn’t come from what you do occasionally.
+          It comes from what you do consistently.”
+        </p>
+
+      </div>
+
+      <div class="quote-shape bg-[#e4eef8] p-10 shadow-xl">
+
+        <h3 class="font-black text-2xl">
+          🚀 Believe Yourself
+        </h3>
+
+        <p class="mt-5 text-gray-700 leading-relaxed">
+          “Push yourself because nobody else is going
+          to do it for you.”
+        </p>
+
+      </div>
+
+      <div class="quote-shape bg-[#f8e9dd] p-10 shadow-xl">
+
+        <h3 class="font-black text-2xl">
+          📖 Smart Study
+        </h3>
+
+        <p class="mt-5 text-gray-700 leading-relaxed">
+          “The secret of getting ahead is getting started.”
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- PAPERS -->
+  <main
+    id="papers"
+    class="max-w-7xl mx-auto px-5 py-16 flex-1"
+  >
+
+    <div class="flex flex-col md:flex-row gap-5 items-center justify-between mb-10">
+
+      <div>
+
+        <h2 class="text-5xl font-black text-[#44546d]">
+          Important Papers
+        </h2>
+
+        <p class="text-gray-600 mt-3 text-lg">
+          Curated exam papers for maximum preparation efficiency.
+        </p>
+
+      </div>
+
+      <div class="desk-box px-6 py-4">
+
+        <span class="text-gray-500">
+          Papers:
+        </span>
+
+        <span
+          id="paperCount"
+          class="font-black text-2xl text-[#5f7da8]"
+        >
+          0
+        </span>
+
+      </div>
+
+    </div>
+
+    <!-- GRID -->
+    <div
+      id="paperGrid"
+      class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
+    ></div>
+
+  </main>
+
+  <!-- HELP -->
+  <section
+    id="help"
+    class="px-5 pb-20"
+  >
+
+    <div class="max-w-7xl mx-auto desk-box p-10">
+
+      <h2 class="text-5xl font-black text-[#4b627f]">
+        Help Center 💌
+      </h2>
+
+      <p class="text-gray-600 mt-4 text-lg">
+        Need support or want to contribute papers?
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-8 mt-10">
+
+        <div class="paper-card p-8">
+
+          <h3 class="text-2xl font-black">
+            📥 Download Papers
+          </h3>
+
+          <p class="mt-4 text-gray-600 leading-relaxed">
+            Click on “Open Paper” to instantly view and download PDFs.
+          </p>
+
+        </div>
+
+        <div class="paper-card p-8">
+
+          <h3 class="text-2xl font-black">
+            📧 Contact Support
+          </h3>
+
+          <p class="mt-4 text-gray-600 leading-relaxed">
+            Helpline Mail:
+          </p>
+
+          <a
+            href="mailto:support@examnest.com"
+            class="text-[#5f7da8] font-bold text-lg"
+          >
+            support@examnest.com
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="text-center py-8 text-gray-500">
+
+    <p class="text-lg">
+      © 2026 ExamNest — Built for focused students 🌿
+    </p>
+
+  </footer>
+
+  <!-- MODAL -->
+  <div
+    id="modal"
+    class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4 z-50"
+  >
+
+    <div class="bg-[#fffdf8] rounded-[40px] w-full max-w-6xl overflow-hidden shadow-2xl fade-in">
+
+      <!-- TOP -->
+      <div class="bg-[#dfe7f3] p-6 flex justify-between items-start">
+
+        <div>
+
+          <h2
+            id="modalTitle"
+            class="text-3xl font-black text-[#4f6689]"
+          ></h2>
+
+          <div class="flex gap-3 mt-4">
+
+            <span
+              id="modalSemester"
+              class="bg-white px-4 py-2 rounded-full shadow"
+            ></span>
+
+            <span
+              id="modalSubject"
+              class="bg-white px-4 py-2 rounded-full shadow"
+            ></span>
+
+          </div>
+
+        </div>
+
+        <button
+          id="closeModal"
+          class="text-4xl text-gray-500 hover:text-red-400"
+        >
+          ×
+        </button>
+
+      </div>
+
+      <!-- CONTENT -->
+      <div class="p-6">
+
+        <p
+          id="modalDescription"
+          class="text-gray-700 text-lg mb-6"
+        ></p>
+
+        <iframe
+          id="pdfViewer"
+          class="w-full h-[75vh] rounded-[30px] border"
+        ></iframe>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    // IMPORTANT SUBJECTS ONLY
+    const subjects = [
+
+      "Data Structures",
+      "DBMS",
+      "Operating Systems",
+      "Computer Networks",
+      "Software Engineering",
+      "Artificial Intelligence",
+      "Machine Learning",
+      "Web Development",
+      "Cyber Security",
+      "Cloud Computing"
+
+    ];
+
+    // IMPORTANT PAPERS
+    const papers = [];
+
+    for (let i = 1; i <= 80; i++) {
+
+      const semester =
+        `Semester ${((i - 1) % 8) + 1}`;
+
+      const subject =
+        subjects[i % subjects.length];
+
+      papers.push({
+
+        id: i,
+
+        title:
+          `${subject} Important PYQ ${2020 + (i % 5)}`,
+
+        semester,
+
+        subject,
+
+        description:
+          `Carefully selected important previous year questions for ${subject}. Ideal for revision and exam preparation.`,
+
+        pdf:
+          "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+      });
+    }
+
+    // ELEMENTS
+    const paperGrid =
+      document.getElementById("paperGrid");
+
+    const paperCount =
+      document.getElementById("paperCount");
+
+    const searchInput =
+      document.getElementById("searchInput");
+
+    const semesterFilter =
+      document.getElementById("semesterFilter");
+
+    // MODAL
+    const modal =
+      document.getElementById("modal");
+
+    const closeModal =
+      document.getElementById("closeModal");
+
+    const modalTitle =
+      document.getElementById("modalTitle");
+
+    const modalSemester =
+      document.getElementById("modalSemester");
+
+    const modalSubject =
+      document.getElementById("modalSubject");
+
+    const modalDescription =
+      document.getElementById("modalDescription");
+
+    const pdfViewer =
+      document.getElementById("pdfViewer");
+
+    // SEMESTERS
+    for (let i = 1; i <= 8; i++) {
+
+      semesterFilter.innerHTML += `
+        <option value="Semester ${i}">
+          Semester ${i}
+        </option>
+      `;
+    }
+
+    // OPEN MODAL
+    function openModal(paper) {
+
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+
+      modalTitle.textContent =
+        paper.title;
+
+      modalSemester.textContent =
+        paper.semester;
+
+      modalSubject.textContent =
+        paper.subject;
+
+      modalDescription.textContent =
+        paper.description;
+
+      pdfViewer.src =
+        paper.pdf;
+
+      document.body.style.overflow =
+        "hidden";
+    }
+
+    // CLOSE MODAL
+    function closePaperModal() {
+
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+
+      pdfViewer.src = "";
+
+      document.body.style.overflow =
+        "auto";
+    }
+
+    closeModal.addEventListener(
+      "click",
+      closePaperModal
+    );
+
+    modal.addEventListener(
+      "click",
+      (e) => {
+
+        if (e.target === modal) {
+
+          closePaperModal();
+        }
+      }
+    );
+
+    // FILTER
+    function getFilteredPapers() {
+
+      const query =
+        searchInput.value.toLowerCase();
+
+      const semester =
+        semesterFilter.value;
+
+      return papers.filter(paper => {
+
+        const matchesSearch =
+
+          paper.title
+            .toLowerCase()
+            .includes(query) ||
+
+          paper.subject
+            .toLowerCase()
+            .includes(query);
+
+        const matchesSemester =
+
+          semester === "all" ||
+
+          paper.semester === semester;
+
+        return matchesSearch &&
+               matchesSemester;
+      });
+    }
+
+    // CREATE CARD
+    function createCard(paper) {
+
+      const card =
+        document.createElement("div");
+
+      card.className =
+        "paper-card p-8 fade-in";
+
+      card.innerHTML = `
+
+        <div class="flex justify-between items-start gap-3">
+
+          <span class="sticky-note px-4 py-2 text-sm font-bold">
+            ${paper.semester}
+          </span>
+
+          <span class="bg-[#dfe7f3] text-[#5f7da8] px-4 py-2 rounded-full text-sm font-bold">
+            ${paper.subject}
+          </span>
+
+        </div>
+
+        <h2 class="text-3xl font-black mt-6 leading-tight text-[#45546d]">
+          ${paper.title}
+        </h2>
+
+        <p class="text-gray-600 mt-5 leading-relaxed">
+          ${paper.description}
+        </p>
+
+        <button class="open-btn soft-btn mt-8 w-full py-4 font-bold text-lg">
+          Open Paper
+        </button>
+      `;
+
+      card
+        .querySelector(".open-btn")
+        .addEventListener(
+          "click",
+          () => openModal(paper)
+        );
+
+      return card;
+    }
+
+    // RENDER
+    function renderPapers(data) {
+
+      paperGrid.innerHTML = "";
+
+      data.forEach(paper => {
+
+        paperGrid.appendChild(
+          createCard(paper)
+        );
+      });
+
+      paperCount.textContent =
+        data.length;
+    }
+
+    // EVENTS
+    searchInput.addEventListener(
+      "input",
+      () => renderPapers(getFilteredPapers())
+    );
+
+    semesterFilter.addEventListener(
+      "change",
+      () => renderPapers(getFilteredPapers())
+    );
+
+    // INITIAL
+    renderPapers(papers);
+
+  </script>
+
+</body>
+</html>
